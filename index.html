@@ -34,21 +34,36 @@
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3">
                 <div class="result-card">
-                    <h2 class="text-center">Upload Your HTML Files for Followers and Following</h2>
+                    <!-- Language Toggle Button -->
+                    <div class="text-end mb-3">
+                        <button class="btn btn-sm btn-outline-dark" id="toggleLanguageBtn" onclick="toggleLanguage()">中文</button>
+                    </div>
+
+                    <h2 class="text-center" data-en="Upload Your HTML Files for Followers and Following" data-zh="上传关注者和正在关注的 HTML 文件">
+                        Upload Your HTML Files for Followers and Following
+                    </h2>
+                    
 
                     <!-- File Upload Form -->
-                    <div class="mb-4">
-                        <label for="followersFile" class="form-label">Upload Followers File</label>
+                     <div class="mb-4">
+                        <label for="followersFile" class="form-label" data-en="Upload Followers File" data-zh="上传关注者文件">
+                            Upload Followers File
+                        </label>
                         <input type="file" id="followersFile" class="form-control" accept=".html" />
                     </div>
-
-                    <div class="mb-4">
-                        <label for="followingFile" class="form-label">Upload Following File</label>
-                        <input type="file" id="followingFile" class="form-control" accept=".html" />
-                    </div>
+                    
+                    
+                    <div>
+                    <label for="followingFile" class="form-label" data-en="Upload Following File" data-zh="上传正在关注的文件">
+                        Upload Following File
+                    </label>
+                    <input type="file" id="followingFile" class="form-control" accept=".html" /></div>
 
                     <!-- Button to Process the Files -->
-                    <button class="btn btn-primary" onclick="processFiles()">Process Files</button>
+                    <button class="btn btn-primary" onclick="processFiles()" data-en="Process Files" data-zh="处理文件">
+                        Process Files
+                    </button>
+                    <br>
 
                     <!-- Loading Spinner -->
                     <div class="loading-spinner text-center">
@@ -57,14 +72,37 @@
                         </div>
                     </div>
 
-                    <h3 class="mt-4">Analysis Results:</h3>
-                    <h4>People You Don't Follow Back:</h4>
-                    <ul id="dontFollowBackList"></ul>
-                    <h4>People Who Don't Follow You:</h4>
-                    <ul id="notFollowingYouList"></ul>
+                    <h3 class="mt-4" data-en="Analysis Results: (Click to Expand)" data-zh="分析结果：（点击展开）">
+                        Analysis Results: (Click to Expand)
+                    </h3>
+
+                    <!-- Dropdown for People You Don't Follow Back -->
+                    <a class="btn btn-outline-primary w-100 text-start" data-bs-toggle="collapse" href="#dontFollowBackCollapse" role="button" aria-expanded="false" aria-controls="dontFollowBackCollapse"
+                    data-en="People You Don't Follow Back ↓" data-zh="你没有回关的人 ↓">
+                     People You Don't Follow Back ↓
+                    </a>
+                    <div class="collapse" id="dontFollowBackCollapse">
+                        <div class="card card-body">
+                            <ul id="dontFollowBackList" class="list-group"></ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Dropdown for People Who Don't Follow You -->
+                    <a class="btn btn-outline-primary w-100 text-start" data-bs-toggle="collapse" href="#notFollowingYouCollapse" role="button" aria-expanded="false" aria-controls="notFollowingYouCollapse"
+                    data-en="People Who Don't Follow You ↓" data-zh="没有回关你的人 ↓">
+                        People Who Don't Follow You ↓
+                    </a>
+                    <div class="collapse" id="notFollowingYouCollapse">
+                        <div class="card card-body">
+                            <ul id="notFollowingYouList" class="list-group"></ul>
+                        </div>
+                    </div>
+                    
 
                     <!-- Alert for Error Messages -->
-                    <div id="errorAlert" class="alert alert-danger d-none" role="alert">
+                    <div id="errorAlert" class="alert alert-danger d-none" role="alert"
+                        data-en="There was an error processing the files. Please check the file format and try again."
+                        data-zh="处理文件时出错。请检查文件格式并重试。">
                         There was an error processing the files. Please check the file format and try again.
                     </div>
                 </div>
@@ -199,6 +237,24 @@
             // Hide the loading spinner after processing
             document.querySelector('.loading-spinner').style.display = 'none';
         }
+
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            const translatables = document.querySelectorAll('[data-en][data-zh]');
+            const button = document.getElementById('toggleLanguageBtn');
+
+            if (currentLang === 'en') {
+                translatables.forEach(el => el.textContent = el.getAttribute('data-zh'));
+                button.textContent = 'English';
+                currentLang = 'zh';
+            } else {
+                translatables.forEach(el => el.textContent = el.getAttribute('data-en'));
+                button.textContent = '中文';
+                currentLang = 'en';
+            }
+        }
+
     </script>
 
 </body>
